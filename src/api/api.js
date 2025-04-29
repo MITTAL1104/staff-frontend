@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
 const authorizedRequest = async (method, url, data = null) => {
 
   try {
@@ -17,7 +19,7 @@ const authorizedRequest = async (method, url, data = null) => {
 };
 
 export const downloadExcel = async (fileName = "data", type, value, entity) => {
-  const url = new URL(`${process.env.process.env.process.env.API_BASE_URL}/${entity}/downloadExcel`);
+  const url = new URL(`${baseUrl}/${entity}/downloadExcel`);
   if (type !== undefined) url.searchParams.append("type", type);
   if (value !== undefined) url.searchParams.append("value", value);
 
@@ -45,7 +47,7 @@ export const downloadExcel = async (fileName = "data", type, value, entity) => {
 
 export const userRegister = async (email, password) => {
   try {
-    const response = await axios.post(`${process.env.API_BASE_URL}/register`, {
+    const response = await axios.post(`${baseUrl}/register`, {
       email,
       password,
     });
@@ -66,7 +68,7 @@ export const userRegisterWithDetails = async (
   dateOfJoining
 ) => {
   try {
-    const response = await axios.post(`${process.env.API_BASE_URL}/registerWithDetails`, {
+    const response = await axios.post(`${baseUrl}/registerWithDetails`, {
       email,
       password,
       name,
@@ -85,7 +87,7 @@ export const userRegisterWithDetails = async (
 };
 
 export const userLogin = async (email, password) => {
-  const response = await axios.post(`${process.env.API_BASE_URL}/login`, {
+  const response = await axios.post(`${baseUrl}/login`, {
     email,
     password,
   },{withCredentials:true});
@@ -93,14 +95,14 @@ export const userLogin = async (email, password) => {
 };
 
 export const userLogout = async () => {
-  const response = await axios.get(`${process.env.API_BASE_URL}/logout`, {
+  const response = await axios.get(`${baseUrl}/logout`, {
     withCredentials: true, 
   });
   return response.data;
 };
 
 export const updatePassword = async(email,oldPassword,newPassword) => {
-  return authorizedRequest("post",`${process.env.API_BASE_URL}/updatePassword`,{
+  return authorizedRequest("post",`${baseUrl}/updatePassword`,{
     email,
     oldPassword,
     newPassword
@@ -109,7 +111,7 @@ export const updatePassword = async(email,oldPassword,newPassword) => {
 
 export const fetchUserDetails = async() =>{
   try{
-    const response = await axios.get(`${process.env.API_BASE_URL}/details`,{
+    const response = await axios.get(`${baseUrl}/details`,{
       withCredentials:true,
     });
     return response;
@@ -119,179 +121,179 @@ export const fetchUserDetails = async() =>{
 }
 
 export const fetchAllData = async (entity) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/${entity}/getAll`);
+  return authorizedRequest("get", `${baseUrl}/${entity}/getAll`);
 };
 
 export const fetchAllActiveData = async (entity) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/${entity}/getAllActive`);
+  return authorizedRequest("get", `${baseUrl}/${entity}/getAllActive`);
 };
 
 export const fetchById = async (entity, id) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/${entity}/getById/${id}`);
+  return authorizedRequest("get", `${baseUrl}/${entity}/getById/${id}`);
 };
 
 export const fetchAllAllocationData = async () => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/allocation/getAll`);
+  return authorizedRequest("get", `${baseUrl}/allocation/getAll`);
 };
 
 export const fetchAllAllocationByEmployeeName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getAllocByEmpName/${name}`
+    `${baseUrl}/allocation/getAllocByEmpName/${name}`
   );
 };
 
 export const fetchAllocationByEmployeeName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getByEmpName/${name}`
+    `${baseUrl}/allocation/getByEmpName/${name}`
   );
 };
 
 export const fetchByAllocationId = async (id) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/allocation/getById/${id}`);
+  return authorizedRequest("get", `${baseUrl}/allocation/getById/${id}`);
 };
 
 export const fetchByEmployeeId = async (id) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getByEmpId/${id}`
+    `${baseUrl}/allocation/getByEmpId/${id}`
   );
 };
 
 export const fetchByProjectId = async (id) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getByProjId/${id}`
+    `${baseUrl}/allocation/getByProjId/${id}`
   );
 };
 
 export const fetchByName = async (entity, name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/${entity}/getAllByName/${name}`
+    `${baseUrl}/${entity}/getAllByName/${name}`
   );
 };
 
 export const fetchByNameForUpdate = async (entity, name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/${entity}/getByName/${name}`
+    `${baseUrl}/${entity}/getByName/${name}`
   );
 };
 
 export const fetchAllocationByProjectName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getByProjName/${name}`
+    `${baseUrl}/allocation/getByProjName/${name}`
   );
 };
 
 export const fetchByNameForUpdateAllocation = async (entity, name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/${entity}/getByEmpName/${name}`
+    `${baseUrl}/${entity}/getByEmpName/${name}`
   );
 };
 
 export const fetchByProjectNameForUpdateAllocation = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/updateByProjName/${name}`
+    `${baseUrl}/allocation/updateByProjName/${name}`
   );
 };
 
 export const fetchAllNames = async (entity,name) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/${entity}/getNames/${name}`);
+  return authorizedRequest("get", `${baseUrl}/${entity}/getNames/${name}`);
 };
 
 export const getAllEmpNames = async()=> {
-  return authorizedRequest("get",`${process.env.API_BASE_URL}/employee/getAllNames`);
+  return authorizedRequest("get",`${baseUrl}/employee/getAllNames`);
 }
 
 export const fetchAllIds = async (entity, name = "") => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/${entity}/getIds/${name}`);
+  return authorizedRequest("get", `${baseUrl}/${entity}/getIds/${name}`);
 };
 
 export const fetchAllocIds = async (name = "") => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getAllocIds/${name}`
+    `${baseUrl}/allocation/getAllocIds/${name}`
   );
 };
 
 export const fetchAllProjNames = async (entity, name = "") => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/${entity}/getProjects/${name}`
+    `${baseUrl}/${entity}/getProjects/${name}`
   );
 };
 
 export const fetchEmpNameByEmail = async (entity, email) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/${entity}/getNameByEmail/${email}`
+    `${baseUrl}/${entity}/getNameByEmail/${email}`
   );
 };
 
 export const fetchIsAdminByEmail = async (email) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/getIsAdmin/${email}`);
+  return authorizedRequest("get", `${baseUrl}/getIsAdmin/${email}`);
 };
 
 export const fetchEmpIdByEmail = async (email) => {
-  return authorizedRequest("get", `${process.env.API_BASE_URL}/getEmpIdByEmail/${email}`);
+  return authorizedRequest("get", `${baseUrl}/getEmpIdByEmail/${email}`);
 };
 
 export const fetchProjIdByEmpId = async (entity, id) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/${entity}/getProjIdByEmpId/${id}`
+    `${baseUrl}/${entity}/getProjIdByEmpId/${id}`
   );
 };
 
 export const fetchEmpIdByName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getEmpIdByName/${name}`
+    `${baseUrl}/allocation/getEmpIdByName/${name}`
   );
 };
 
 export const fetchProjIdByName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getProjIdByName/${name}`
+    `${baseUrl}/allocation/getProjIdByName/${name}`
   );
 };
 
 export const fetchAllocForDeleteByEmpName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getAllocDelByEmpName/${name}`
+    `${baseUrl}/allocation/getAllocDelByEmpName/${name}`
   );
 };
 
 export const fetchAllocForDeleteByProjName = async (name) => {
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/allocation/getAllocDelByProjName/${name}`
+    `${baseUrl}/allocation/getAllocDelByProjName/${name}`
   )
 };
 
 export const fetchAllRoles = async()=>{
   return authorizedRequest(
     "get",
-    `${process.env.API_BASE_URL}/employee/getRoles`
+    `${baseUrl}/employee/getRoles`
   )
 } 
 
 export const createData = async (entity, data) => {
-  return authorizedRequest("post", `${process.env.API_BASE_URL}/${entity}/add`, data);
+  return authorizedRequest("post", `${baseUrl}/${entity}/add`, data);
 };
 
 export const updateDataById = async (entity, id, data) => {
   return authorizedRequest(
     "put",
-    `${process.env.API_BASE_URL}/${entity}/updateId/${id}`,
+    `${baseUrl}/${entity}/updateId/${id}`,
     data
   );
 };
@@ -299,7 +301,7 @@ export const updateDataById = async (entity, id, data) => {
 export const updateAllocByProjId = async (id, data) => {
   return authorizedRequest(
     "put",
-    `${process.env.API_BASE_URL}/allocation/updateAllocByProjId/${id}`,
+    `${baseUrl}/allocation/updateAllocByProjId/${id}`,
     data
   );
 };
@@ -307,46 +309,46 @@ export const updateAllocByProjId = async (id, data) => {
 export const updateDataByName = async (entity, name, data) => {
   return authorizedRequest(
     "put",
-    `${process.env.API_BASE_URL}/${entity}/updateName/${name}`,
+    `${baseUrl}/${entity}/updateName/${name}`,
     data
   );
 };
 
 export const deleteAllData = async (entity) => {
-  return authorizedRequest("delete", `${process.env.API_BASE_URL}/${entity}/deleteAll/`);
+  return authorizedRequest("delete", `${baseUrl}/${entity}/deleteAll/`);
 };
 
 export const deleteDataByID = async (entity, id) => {
   return authorizedRequest(
     "delete",
-    `${process.env.API_BASE_URL}/${entity}/deleteId/${id}`
+    `${baseUrl}/${entity}/deleteId/${id}`
   );
 };
 
 export const deleteDataByName = async (entity, name) => {
   return authorizedRequest(
     "delete",
-    `${process.env.API_BASE_URL}/${entity}/deleteName/${name}`
+    `${baseUrl}/${entity}/deleteName/${name}`
   );
 };
 
 export const deleteDataByAllocationID = async (id) => {
   return authorizedRequest(
     "delete",
-    `${process.env.API_BASE_URL}/allocation/deleteId/${id}`
+    `${baseUrl}/allocation/deleteId/${id}`
   );
 };
 
 export const deleteDataByEmployeeID = async (id) => {
   return authorizedRequest(
     "delete",
-    `${process.env.API_BASE_URL}/allocation/deleteEmpId/${id}`
+    `${baseUrl}/allocation/deleteEmpId/${id}`
   );
 };
 
 export const deleteDataByProjectID = async (id) => {
   return authorizedRequest(
     "delete",
-    `${process.env.API_BASE_URL}/allocation/deleteProjId/${id}`
+    `${baseUrl}/allocation/deleteProjId/${id}`
   );
 };
